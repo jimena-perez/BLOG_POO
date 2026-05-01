@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Map;
 
 public class Interfaz {
 
@@ -19,10 +20,22 @@ public class Interfaz {
             try {
                 opcion = Integer.parseInt(entrada.nextLine());
 
-                if (opcion == 8) {
-                    System.out.println("Saliendo del sistema...");
-                } else {
-                    System.out.println("Opcion seleccionada: " + opcion);
+                switch (opcion) {
+                    case 1:
+                        crearBlog();
+                        break;
+
+                    case 2:
+                        mostrarBlogs();
+                        break;
+
+                    case 8:
+                        System.out.println("Saliendo del sistema...");
+                        break;
+
+                    default:
+                        System.out.println("Opcion no valida.");
+                        break;
                 }
 
             } catch (NumberFormatException e) {
@@ -43,5 +56,33 @@ public class Interfaz {
         System.out.println("7. Borrar comentario");
         System.out.println("8. Salir");
         System.out.print("Digite una opcion: ");
+    }
+
+    private void crearBlog() {
+        System.out.println("\n--- CREAR BLOG ---");
+
+        System.out.print("Digite el nombre del blog: ");
+        String nombre = entrada.nextLine();
+
+        System.out.print("Digite la descripcion del blog: ");
+        String descripcion = entrada.nextLine();
+
+        sistema.crearBlog(nombre, descripcion);
+
+        System.out.println("Blog creado correctamente.");
+    }
+
+    private void mostrarBlogs() {
+        System.out.println("\n--- LISTA DE BLOGS ---");
+
+        Map<Integer, String> blogs = sistema.obtenerBlogs();
+
+        if (blogs.size() == 0) {
+            System.out.println("No hay blogs registrados.");
+        } else {
+            for (Integer codigo : blogs.keySet()) {
+                System.out.println("Codigo: " + codigo + " | Nombre: " + blogs.get(codigo));
+            }
+        }
     }
 }
