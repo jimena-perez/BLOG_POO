@@ -59,4 +59,13 @@ public class Controladora {
         Blog b = blogs.get(codigoBlog);
         b.borrarComentario(codigoPublicacion, posicion);
     }
+
+    public Map<Integer, String> obtenerPublicaciones(int codigoBlog) throws Exception {
+    if (!blogs.containsKey(codigoBlog)) {
+        throw new Exception("Blog no existe");
+    }
+
+    Blog b = blogs.get(codigoBlog);
+    return b.obtenerTitulos();
+}
 }
