@@ -41,6 +41,14 @@ public class Interfaz {
                         verPublicacion();
                         break;
 
+                    case 6:
+                        agregarComentario();
+                        break;
+
+                    case 7:
+                        borrarComentario();
+                        break;
+
                     case 8:
                         System.out.println("Saliendo del sistema...");
                         break;
@@ -167,5 +175,74 @@ public class Interfaz {
 
         System.out.println("\n--- CONTENIDO DE LA PUBLICACION ---");
         System.out.println(publicacion);
+    }
+
+    private void agregarComentario() throws Exception {
+        System.out.println("\n--- AGREGAR COMENTARIO ---");
+
+        mostrarBlogs();
+
+        System.out.print("Digite el codigo del blog: ");
+        int codigoBlog = Integer.parseInt(entrada.nextLine());
+
+        Map<Integer, String> publicaciones = sistema.obtenerPublicaciones(codigoBlog);
+
+        if (publicaciones.size() == 0) {
+            System.out.println("Este blog no tiene publicaciones.");
+            return;
+        }
+
+        for (Integer codigo : publicaciones.keySet()) {
+            System.out.println("Codigo: " + codigo + " | Titulo: " + publicaciones.get(codigo));
+        }
+
+        System.out.print("Digite el codigo de la publicacion: ");
+        int codigoPublicacion = Integer.parseInt(entrada.nextLine());
+
+        System.out.print("Digite el email del autor: ");
+        String email = entrada.nextLine();
+
+        System.out.print("Digite la direccion IP: ");
+        String ip = entrada.nextLine();
+
+        System.out.print("Digite el comentario: ");
+        String texto = entrada.nextLine();
+
+        sistema.agregarComentario(codigoBlog, codigoPublicacion, email, ip, texto);
+
+        System.out.println("Comentario agregado correctamente.");
+    }
+
+    private void borrarComentario() throws Exception {
+        System.out.println("\n--- BORRAR COMENTARIO ---");
+
+        mostrarBlogs();
+
+        System.out.print("Digite el codigo del blog: ");
+        int codigoBlog = Integer.parseInt(entrada.nextLine());
+
+        Map<Integer, String> publicaciones = sistema.obtenerPublicaciones(codigoBlog);
+
+        if (publicaciones.size() == 0) {
+            System.out.println("Este blog no tiene publicaciones.");
+            return;
+        }
+
+        for (Integer codigo : publicaciones.keySet()) {
+            System.out.println("Codigo: " + codigo + " | Titulo: " + publicaciones.get(codigo));
+        }
+
+        System.out.print("Digite el codigo de la publicacion: ");
+        int codigoPublicacion = Integer.parseInt(entrada.nextLine());
+
+        System.out.println("\nLa posicion del comentario inicia en 0.");
+        System.out.println("Ejemplo: primer comentario = 0, segundo comentario = 1.");
+
+        System.out.print("Digite la posicion del comentario que desea borrar: ");
+        int posicion = Integer.parseInt(entrada.nextLine());
+
+        sistema.borrarComentario(codigoBlog, codigoPublicacion, posicion);
+
+        System.out.println("Comentario borrado correctamente.");
     }
 }
