@@ -29,6 +29,18 @@ public class Interfaz {
                         mostrarBlogs();
                         break;
 
+                    case 3:
+                        crearPublicacion();
+                        break;
+
+                    case 4:
+                        mostrarPublicaciones();
+                        break;
+
+                    case 5:
+                        verPublicacion();
+                        break;
+
                     case 8:
                         System.out.println("Saliendo del sistema...");
                         break;
@@ -40,6 +52,8 @@ public class Interfaz {
 
             } catch (NumberFormatException e) {
                 System.out.println("Debe ingresar solo numeros.");
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
             }
 
         } while (opcion != 8);
@@ -84,5 +98,74 @@ public class Interfaz {
                 System.out.println("Codigo: " + codigo + " | Nombre: " + blogs.get(codigo));
             }
         }
+    }
+
+    private void crearPublicacion() throws Exception {
+        System.out.println("\n--- CREAR PUBLICACION ---");
+
+        mostrarBlogs();
+
+        System.out.print("Digite el codigo del blog: ");
+        int codigoBlog = Integer.parseInt(entrada.nextLine());
+
+        System.out.print("Digite el titulo: ");
+        String titulo = entrada.nextLine();
+
+        System.out.print("Digite el texto: ");
+        String texto = entrada.nextLine();
+
+        System.out.print("Digite el nombre del creador: ");
+        String creador = entrada.nextLine();
+
+        sistema.crearPublicacion(codigoBlog, titulo, texto, creador);
+
+        System.out.println("Publicacion creada correctamente.");
+    }
+
+    private void mostrarPublicaciones() throws Exception {
+        System.out.println("\n--- PUBLICACIONES DEL BLOG ---");
+
+        mostrarBlogs();
+
+        System.out.print("Digite el codigo del blog: ");
+        int codigoBlog = Integer.parseInt(entrada.nextLine());
+
+        Map<Integer, String> publicaciones = sistema.obtenerPublicaciones(codigoBlog);
+
+        if (publicaciones.size() == 0) {
+            System.out.println("Este blog no tiene publicaciones.");
+        } else {
+            for (Integer codigo : publicaciones.keySet()) {
+                System.out.println("Codigo: " + codigo + " | Titulo: " + publicaciones.get(codigo));
+            }
+        }
+    }
+
+    private void verPublicacion() throws Exception {
+        System.out.println("\n--- VER PUBLICACION COMPLETA ---");
+
+        mostrarBlogs();
+
+        System.out.print("Digite el codigo del blog: ");
+        int codigoBlog = Integer.parseInt(entrada.nextLine());
+
+        Map<Integer, String> publicaciones = sistema.obtenerPublicaciones(codigoBlog);
+
+        if (publicaciones.size() == 0) {
+            System.out.println("Este blog no tiene publicaciones.");
+            return;
+        }
+
+        for (Integer codigo : publicaciones.keySet()) {
+            System.out.println("Codigo: " + codigo + " | Titulo: " + publicaciones.get(codigo));
+        }
+
+        System.out.print("Digite el codigo de la publicacion: ");
+        int codigoPublicacion = Integer.parseInt(entrada.nextLine());
+
+        String publicacion = sistema.obtenerPublicacion(codigoBlog, codigoPublicacion);
+
+        System.out.println("\n--- CONTENIDO DE LA PUBLICACION ---");
+        System.out.println(publicacion);
     }
 }
